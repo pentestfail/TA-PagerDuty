@@ -35,8 +35,7 @@ def collect_events(helper, ew):
     
     #Check for last query execution data in kvstore & generate if not present
     try:
-        #last_status = helper.get_check_point(opt_checkpoint) or initial_status
-        last_status = initial_status
+        last_status = helper.get_check_point(opt_checkpoint) or initial_status
         helper.log_debug("input_type=pagerduty_api_incidents input={0:s} message='Last successful checkpoint time.' last_status={1:s}".format(inputname,json.dumps(last_status)))
     except Exception as e:
         helper.log_error("input_type=pagerduty_api_incidents input={0:s} message='Unable to retrieve last execution checkpoint!'".format(inputname))
