@@ -78,7 +78,7 @@ def collect_events(helper, ew):
         offset = 0 #iterator for records returned from Pagerduty
         i = 0 #iterator for indexed records processed
         while has_results:
-            log_entries = get_entries(last_status, now, offset)
+            log_entries = get_entries(last_status, None, offset)
             
             # Get log_entries via Pagerduty API as JSON
             entries = log_entries['log_entries']

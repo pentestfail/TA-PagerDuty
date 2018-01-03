@@ -1,344 +1,57 @@
 {
-    "meta": {
-        "displayName": "PagerDuty", 
-        "restRoot": "TA_PagerDuty", 
-        "name": "TA-PagerDuty", 
-        "version": "1.0.0", 
-        "apiVersion": "3.0.0"
-    }, 
     "pages": {
-        "inputs": {
-            "table": {
-                "header": [
-                    {
-                        "field": "name", 
-                        "label": "Name"
-                    }, 
-                    {
-                        "field": "interval", 
-                        "label": "Interval"
-                    }, 
-                    {
-                        "field": "index", 
-                        "label": "Index"
-                    }, 
-                    {
-                        "field": "disabled", 
-                        "label": "Status"
-                    }
-                ], 
-                "moreInfo": [
-                    {
-                        "field": "name", 
-                        "label": "Name"
-                    }, 
-                    {
-                        "field": "interval", 
-                        "label": "Interval"
-                    }, 
-                    {
-                        "field": "index", 
-                        "label": "Index"
-                    }, 
-                    {
-                        "field": "disabled", 
-                        "label": "Status"
-                    }, 
-                    {
-                        "field": "api_token", 
-                        "label": "API Token"
-                    }, 
-                    {
-                        "field": "api_limit", 
-                        "label": "API Limit"
-                    }, 
-                    {
-                        "field": "days_ago", 
-                        "label": "Initial Days to Sync"
-                    }
-                ], 
-                "actions": [
-                    "edit", 
-                    "enable", 
-                    "delete", 
-                    "clone"
-                ]
-            }, 
-            "title": "Inputs", 
-            "description": "Manage your data inputs", 
-            "services": [
-                {
-                    "title": "Pagerduty: Log Entries", 
-                    "name": "pagerduty_api_logentries", 
-                    "entity": [
-                        {
-                            "help": "Enter a unique name for the data input", 
-                            "type": "text", 
-                            "required": true, 
-                            "field": "name", 
-                            "validators": [
-                                {
-                                    "type": "regex", 
-                                    "pattern": "^[a-zA-Z]\\w*$", 
-                                    "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores."
-                                }, 
-                                {
-                                    "type": "string", 
-                                    "maxLength": 100, 
-                                    "minLength": 1, 
-                                    "errorMsg": "Length of input name should be between 1 and 100"
-                                }
-                            ], 
-                            "label": "Name"
-                        }, 
-                        {
-                            "help": "Time interval of input in seconds.", 
-                            "type": "text", 
-                            "required": true, 
-                            "field": "interval", 
-                            "validators": [
-                                {
-                                    "type": "regex", 
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$", 
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ], 
-                            "label": "Interval"
-                        }, 
-                        {
-                            "options": {
-                                "endpointUrl": "data/indexes", 
-                                "blackList": "^_.*$", 
-                                "createSearchChoice": true
-                            }, 
-                            "type": "singleSelect", 
-                            "required": true, 
-                            "defaultValue": "default", 
-                            "field": "index", 
-                            "validators": [
-                                {
-                                    "type": "string", 
-                                    "maxLength": 80, 
-                                    "minLength": 1, 
-                                    "errorMsg": "Length of index name should be between 1 and 80."
-                                }
-                            ], 
-                            "label": "Index"
-                        }, 
-                        {
-                            "help": "API token with access to your Pagerduty instance.", 
-                            "type": "text", 
-                            "required": true, 
-                            "encrypted": true, 
-                            "field": "api_token", 
-                            "validators": [
-                                {
-                                    "type": "string", 
-                                    "maxLength": 8192, 
-                                    "minLength": 0, 
-                                    "errorMsg": "Max length of password is 8192"
-                                }
-                            ], 
-                            "label": "API Token"
-                        }, 
-                        {
-                            "help": "Max events per API request (100 max).", 
-                            "type": "text", 
-                            "required": true, 
-                            "defaultValue": "100", 
-                            "field": "api_limit", 
-                            "validators": [
-                                {
-                                    "type": "string", 
-                                    "maxLength": 8192, 
-                                    "minLength": 0, 
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ], 
-                            "label": "API Limit"
-                        }, 
-                        {
-                            "help": "Number of days in past to query for initial sync (days ago to now).", 
-                            "type": "text", 
-                            "required": true, 
-                            "defaultValue": "90", 
-                            "field": "days_ago", 
-                            "validators": [
-                                {
-                                    "type": "string", 
-                                    "maxLength": 8192, 
-                                    "minLength": 0, 
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ], 
-                            "label": "Initial Days to Sync"
-                        }
-                    ]
-                }, 
-                {
-                    "title": "Pagerduty: Incidents", 
-                    "name": "pagerduty_api_incidents", 
-                    "entity": [
-                        {
-                            "help": "Enter a unique name for the data input", 
-                            "type": "text", 
-                            "required": true, 
-                            "field": "name", 
-                            "validators": [
-                                {
-                                    "type": "regex", 
-                                    "pattern": "^[a-zA-Z]\\w*$", 
-                                    "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores."
-                                }, 
-                                {
-                                    "type": "string", 
-                                    "maxLength": 100, 
-                                    "minLength": 1, 
-                                    "errorMsg": "Length of input name should be between 1 and 100"
-                                }
-                            ], 
-                            "label": "Name"
-                        }, 
-                        {
-                            "help": "Time interval of input in seconds.", 
-                            "type": "text", 
-                            "required": true, 
-                            "field": "interval", 
-                            "validators": [
-                                {
-                                    "type": "regex", 
-                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$", 
-                                    "errorMsg": "Interval must be an integer."
-                                }
-                            ], 
-                            "label": "Interval"
-                        }, 
-                        {
-                            "options": {
-                                "endpointUrl": "data/indexes", 
-                                "blackList": "^_.*$", 
-                                "createSearchChoice": true
-                            }, 
-                            "type": "singleSelect", 
-                            "required": true, 
-                            "defaultValue": "default", 
-                            "field": "index", 
-                            "validators": [
-                                {
-                                    "type": "string", 
-                                    "maxLength": 80, 
-                                    "minLength": 1, 
-                                    "errorMsg": "Length of index name should be between 1 and 80."
-                                }
-                            ], 
-                            "label": "Index"
-                        }, 
-                        {
-                            "help": "API token with access to your Pagerduty instance.", 
-                            "type": "text", 
-                            "required": true, 
-                            "encrypted": true, 
-                            "field": "api_token", 
-                            "validators": [
-                                {
-                                    "type": "string", 
-                                    "maxLength": 8192, 
-                                    "minLength": 0, 
-                                    "errorMsg": "Max length of password is 8192"
-                                }
-                            ], 
-                            "label": "API Token"
-                        }, 
-                        {
-                            "help": "Max events per API request (100 max).", 
-                            "type": "text", 
-                            "required": true, 
-                            "defaultValue": "100", 
-                            "field": "api_limit", 
-                            "validators": [
-                                {
-                                    "type": "string", 
-                                    "maxLength": 8192, 
-                                    "minLength": 0, 
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ], 
-                            "label": "API Limit"
-                        }, 
-                        {
-                            "help": "Number of days in past to query for initial sync (days ago to now).", 
-                            "type": "text", 
-                            "required": true, 
-                            "defaultValue": "90", 
-                            "field": "days_ago", 
-                            "validators": [
-                                {
-                                    "type": "string", 
-                                    "maxLength": 8192, 
-                                    "minLength": 0, 
-                                    "errorMsg": "Max length of text input is 8192"
-                                }
-                            ], 
-                            "label": "Initial Days to Sync"
-                        }
-                    ]
-                }
-            ]
-        }, 
         "configuration": {
-            "title": "Configuration", 
-            "description": "Set up your add-on", 
             "tabs": [
                 {
                     "options": {
                         "saveValidator": "function(formData) { if(!formData.proxy_enabled || formData.proxy_enabled === '0') {return true; } if(!formData.proxy_url) { return 'Proxy Host can not be empty'; } if(!formData.proxy_port) { return 'Proxy Port can not be empty'; } return true; }"
                     }, 
-                    "title": "Proxy", 
-                    "name": "proxy", 
                     "entity": [
                         {
                             "type": "checkbox", 
-                            "field": "proxy_enabled", 
-                            "label": "Enable"
+                            "label": "Enable", 
+                            "field": "proxy_enabled"
                         }, 
                         {
+                            "type": "singleSelect", 
+                            "label": "Proxy Type", 
                             "options": {
-                                "disableSearch": true, 
                                 "autoCompleteFields": [
                                     {
-                                        "label": "http", 
-                                        "value": "http"
+                                        "value": "http", 
+                                        "label": "http"
                                     }, 
                                     {
-                                        "label": "socks4", 
-                                        "value": "socks4"
+                                        "value": "socks4", 
+                                        "label": "socks4"
                                     }, 
                                     {
-                                        "label": "socks5", 
-                                        "value": "socks5"
+                                        "value": "socks5", 
+                                        "label": "socks5"
                                     }
-                                ]
+                                ], 
+                                "disableSearch": true
                             }, 
-                            "type": "singleSelect", 
-                            "defaultValue": "http", 
                             "field": "proxy_type", 
-                            "label": "Proxy Type"
+                            "defaultValue": "http"
                         }, 
                         {
                             "type": "text", 
+                            "label": "Host", 
+                            "field": "proxy_url", 
                             "validators": [
                                 {
                                     "type": "string", 
                                     "maxLength": 4096, 
-                                    "minLength": 0, 
-                                    "errorMsg": "Max host length is 4096"
+                                    "errorMsg": "Max host length is 4096", 
+                                    "minLength": 0
                                 }
-                            ], 
-                            "field": "proxy_url", 
-                            "label": "Host"
+                            ]
                         }, 
                         {
                             "type": "text", 
+                            "label": "Port", 
+                            "field": "proxy_port", 
                             "validators": [
                                 {
                                     "type": "number", 
@@ -347,82 +60,371 @@
                                         65535
                                     ]
                                 }
-                            ], 
-                            "field": "proxy_port", 
-                            "label": "Port"
+                            ]
                         }, 
                         {
                             "type": "text", 
+                            "label": "Username", 
+                            "field": "proxy_username", 
                             "validators": [
                                 {
                                     "type": "string", 
                                     "maxLength": 50, 
-                                    "minLength": 0, 
-                                    "errorMsg": "Max length of username is 50"
+                                    "errorMsg": "Max length of username is 50", 
+                                    "minLength": 0
                                 }
-                            ], 
-                            "field": "proxy_username", 
-                            "label": "Username"
+                            ]
                         }, 
                         {
                             "type": "text", 
+                            "label": "Password", 
                             "validators": [
                                 {
                                     "type": "string", 
                                     "maxLength": 8192, 
-                                    "minLength": 0, 
-                                    "errorMsg": "Max length of password is 8192"
+                                    "errorMsg": "Max length of password is 8192", 
+                                    "minLength": 0
                                 }
                             ], 
-                            "encrypted": true, 
                             "field": "proxy_password", 
-                            "label": "Password"
+                            "encrypted": true
                         }, 
                         {
                             "type": "checkbox", 
-                            "field": "proxy_rdns", 
-                            "label": "Reverse DNS resolution"
+                            "label": "Reverse DNS resolution", 
+                            "field": "proxy_rdns"
                         }
-                    ]
+                    ], 
+                    "name": "proxy", 
+                    "title": "Proxy"
                 }, 
                 {
-                    "title": "Logging", 
-                    "name": "logging", 
                     "entity": [
                         {
+                            "type": "singleSelect", 
+                            "label": "Log level", 
                             "options": {
-                                "disableSearch": true, 
                                 "autoCompleteFields": [
                                     {
-                                        "label": "DEBUG", 
-                                        "value": "DEBUG"
+                                        "value": "DEBUG", 
+                                        "label": "DEBUG"
                                     }, 
                                     {
-                                        "label": "INFO", 
-                                        "value": "INFO"
+                                        "value": "INFO", 
+                                        "label": "INFO"
                                     }, 
                                     {
-                                        "label": "WARNING", 
-                                        "value": "WARNING"
+                                        "value": "WARNING", 
+                                        "label": "WARNING"
                                     }, 
                                     {
-                                        "label": "ERROR", 
-                                        "value": "ERROR"
+                                        "value": "ERROR", 
+                                        "label": "ERROR"
                                     }, 
                                     {
-                                        "label": "CRITICAL", 
-                                        "value": "CRITICAL"
+                                        "value": "CRITICAL", 
+                                        "label": "CRITICAL"
                                     }
-                                ]
+                                ], 
+                                "disableSearch": true
                             }, 
-                            "type": "singleSelect", 
-                            "defaultValue": "INFO", 
                             "field": "loglevel", 
-                            "label": "Log level"
+                            "defaultValue": "INFO"
                         }
-                    ]
+                    ], 
+                    "name": "logging", 
+                    "title": "Logging"
                 }
-            ]
+            ], 
+            "description": "Set up your add-on", 
+            "title": "Configuration"
+        }, 
+        "inputs": {
+            "table": {
+                "actions": [
+                    "edit", 
+                    "enable", 
+                    "delete", 
+                    "clone"
+                ], 
+                "header": [
+                    {
+                        "label": "Name", 
+                        "field": "name"
+                    }, 
+                    {
+                        "label": "Interval", 
+                        "field": "interval"
+                    }, 
+                    {
+                        "label": "Index", 
+                        "field": "index"
+                    }, 
+                    {
+                        "label": "Status", 
+                        "field": "disabled"
+                    }
+                ], 
+                "moreInfo": [
+                    {
+                        "label": "Name", 
+                        "field": "name"
+                    }, 
+                    {
+                        "label": "Interval", 
+                        "field": "interval"
+                    }, 
+                    {
+                        "label": "Index", 
+                        "field": "index"
+                    }, 
+                    {
+                        "label": "Status", 
+                        "field": "disabled"
+                    }, 
+                    {
+                        "label": "API Token", 
+                        "field": "api_token"
+                    }, 
+                    {
+                        "label": "API Limit", 
+                        "field": "api_limit"
+                    }, 
+                    {
+                        "label": "Initial Days to Sync", 
+                        "field": "days_ago"
+                    }
+                ]
+            }, 
+            "description": "Manage your data inputs", 
+            "services": [
+                {
+                    "entity": [
+                        {
+                            "field": "name", 
+                            "validators": [
+                                {
+                                    "type": "regex", 
+                                    "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores.", 
+                                    "pattern": "^[a-zA-Z]\\w*$"
+                                }, 
+                                {
+                                    "type": "string", 
+                                    "maxLength": 100, 
+                                    "errorMsg": "Length of input name should be between 1 and 100", 
+                                    "minLength": 1
+                                }
+                            ], 
+                            "help": "Enter a unique name for the data input", 
+                            "type": "text", 
+                            "label": "Name", 
+                            "required": true
+                        }, 
+                        {
+                            "field": "interval", 
+                            "validators": [
+                                {
+                                    "type": "regex", 
+                                    "errorMsg": "Interval must be an integer.", 
+                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$"
+                                }
+                            ], 
+                            "help": "Time interval of input in seconds.", 
+                            "type": "text", 
+                            "label": "Interval", 
+                            "defaultValue": 3600,
+                            "required": true
+                        }, 
+                        {
+                            "required": true, 
+                            "options": {
+                                "createSearchChoice": true, 
+                                "blackList": "^_.*$", 
+                                "endpointUrl": "data/indexes"
+                            }, 
+                            "validators": [
+                                {
+                                    "type": "string", 
+                                    "maxLength": 80, 
+                                    "errorMsg": "Length of index name should be between 1 and 80.", 
+                                    "minLength": 1
+                                }
+                            ], 
+                            "type": "singleSelect", 
+                            "label": "Index", 
+                            "defaultValue": "default", 
+                            "field": "index"
+                        }, 
+                        {
+                            "field": "api_token", 
+                            "validators": [
+                                {
+                                    "type": "string", 
+                                    "maxLength": 8192, 
+                                    "errorMsg": "Max length of password is 8192", 
+                                    "minLength": 0
+                                }
+                            ], 
+                            "help": "API token with access to your Pagerduty instance.", 
+                            "type": "text", 
+                            "label": "API Token", 
+                            "required": true, 
+                            "encrypted": true
+                        }, 
+                        {
+                            "field": "api_limit", 
+                            "validators": [
+                                {
+                                    "type": "string", 
+                                    "maxLength": 8192, 
+                                    "errorMsg": "Max length of text input is 8192", 
+                                    "minLength": 0
+                                }
+                            ], 
+                            "help": "Max events per API request (100 max).", 
+                            "type": "text", 
+                            "label": "API Limit", 
+                            "defaultValue": "100", 
+                            "required": true
+                        }, 
+                        {
+                            "field": "days_ago", 
+                            "validators": [
+                                {
+                                    "type": "string", 
+                                    "maxLength": 8192, 
+                                    "errorMsg": "Max length of text input is 8192", 
+                                    "minLength": 0
+                                }
+                            ], 
+                            "help": "Number of days in past to query for initial sync (days ago to now).", 
+                            "type": "text", 
+                            "label": "Initial Days to Sync", 
+                            "defaultValue": "90", 
+                            "required": true
+                        }
+                    ], 
+                    "name": "pagerduty_api_logentries", 
+                    "title": "Pagerduty: Log Entries"
+                }, 
+                {
+                    "entity": [
+                        {
+                            "field": "name", 
+                            "validators": [
+                                {
+                                    "type": "regex", 
+                                    "errorMsg": "Input Name must start with a letter and followed by alphabetic letters, digits or underscores.", 
+                                    "pattern": "^[a-zA-Z]\\w*$"
+                                }, 
+                                {
+                                    "type": "string", 
+                                    "maxLength": 100, 
+                                    "errorMsg": "Length of input name should be between 1 and 100", 
+                                    "minLength": 1
+                                }
+                            ], 
+                            "help": "Enter a unique name for the data input", 
+                            "type": "text", 
+                            "label": "Name", 
+                            "required": true
+                        }, 
+                        {
+                            "field": "interval", 
+                            "validators": [
+                                {
+                                    "type": "regex", 
+                                    "errorMsg": "Interval must be an integer.", 
+                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$"
+                                }
+                            ], 
+                            "help": "Time interval of input in seconds.", 
+                            "type": "text", 
+                            "label": "Interval", 
+                            "defaultValue": 3600,
+                            "required": true
+                        }, 
+                        {
+                            "required": true, 
+                            "options": {
+                                "createSearchChoice": true, 
+                                "blackList": "^_.*$", 
+                                "endpointUrl": "data/indexes"
+                            }, 
+                            "validators": [
+                                {
+                                    "type": "string", 
+                                    "maxLength": 80, 
+                                    "errorMsg": "Length of index name should be between 1 and 80.", 
+                                    "minLength": 1
+                                }
+                            ], 
+                            "type": "singleSelect", 
+                            "label": "Index", 
+                            "defaultValue": "default", 
+                            "field": "index"
+                        }, 
+                        {
+                            "field": "api_token", 
+                            "validators": [
+                                {
+                                    "type": "string", 
+                                    "maxLength": 8192, 
+                                    "errorMsg": "Max length of password is 8192", 
+                                    "minLength": 0
+                                }
+                            ], 
+                            "help": "API token with access to your Pagerduty instance.", 
+                            "type": "text", 
+                            "label": "API Token", 
+                            "required": true, 
+                            "encrypted": true
+                        }, 
+                        {
+                            "field": "api_limit", 
+                            "validators": [
+                                {
+                                    "type": "string", 
+                                    "maxLength": 8192, 
+                                    "errorMsg": "Max length of text input is 8192", 
+                                    "minLength": 0
+                                }
+                            ], 
+                            "help": "Max events per API request (100 max).", 
+                            "type": "text", 
+                            "label": "API Limit", 
+                            "defaultValue": "100", 
+                            "required": true
+                        }, 
+                        {
+                            "field": "days_ago", 
+                            "validators": [
+                                {
+                                    "type": "string", 
+                                    "maxLength": 8192, 
+                                    "errorMsg": "Max length of text input is 8192", 
+                                    "minLength": 0
+                                }
+                            ], 
+                            "help": "Number of days in past to query for initial sync (days ago to now).", 
+                            "type": "text", 
+                            "label": "Initial Days to Sync", 
+                            "defaultValue": "365", 
+                            "required": true
+                        }
+                    ], 
+                    "name": "pagerduty_api_incidents", 
+                    "title": "Pagerduty: Incidents"
+                }
+            ], 
+            "title": "Inputs"
         }
+    }, 
+    "meta": {
+        "version": "1.0.1", 
+        "displayName": "PagerDuty Addon", 
+        "apiVersion": "3.0.0", 
+        "name": "TA-PagerDuty", 
+        "restRoot": "TA_PagerDuty"
     }
 }
